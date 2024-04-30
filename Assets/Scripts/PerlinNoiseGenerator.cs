@@ -1,27 +1,31 @@
+using System;
+using System.Linq;
 using UnityEngine;
 
-public class PerlinNoiseGenerator
+public static class PerlinNoiseGenerator
 {
     public static float[,] Generate(int width, int height, float scale, Wave[] waves, Vector2 offset)
     {
-        float[,] noiseMap = new float[width, height];
+        var noiseMap = new float[width, height];
+        var normalization = waves.Sum(wave => wave.Amplitude);
 
-        for (int x = 0; x < width; ++x)
+        for (var x = 0; x < width; ++x)
         {
-            for (int y = 0; y < height; ++y)
+            for (var y = 0; y < height; ++y)
             {
                 //sample positions calculation
-                float samplePositionX = (float)x * scale + offset.x;
-                float sapmplePositionY = (float)y * scale + offset.y;
+                var samplePositionX = x * scale + offset.x;
+                var samplePositionY = y * scale + offset.y;
 
-                float normalization = 0.0f;
+                noiseMap[x, y] = 0.0f;
 
-                foreach (Wave wave in waves)
+                foreach (var wave in waves)
                 {
-                    noiseMap[x, y] += wave.amplitude * Mathf.PerlinNoise(samplePositionX * wave.frequency + wave.seed,
-                        sapmplePositionY * wave.frequency + wave.seed);
-                    normalization += wave.amplitude;
+                    noiseMap[x, y] += wave.Amplitude * Mathf.PerlinNoise(samplePositionX * wave.Frequency + wave.Seed,
+                        samplePositionY * wave.Frequency + wave.Seed);
                 }
+
+                noiseMap[x, y] /= normalization;
             }
         }
 
@@ -29,10 +33,10 @@ public class PerlinNoiseGenerator
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class Wave
 {
-    public float seed; //amount of the noise offsetting
-    public float frequency; //scale of the noisemap
-    public float amplitude; //size and intensity
+    public float Seed; //amount of the noise offsetting
+    public float Frequency; //scale of the noisemap
+    public float Amplitude; //size and intensity
 }

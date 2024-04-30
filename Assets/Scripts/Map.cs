@@ -1,113 +1,121 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    public BiomePreset[] biomes;
-    public GameObject tilePrefab;
+    [SerializeField] private Camera _mainCamera;
+    [SerializeField] private Transform _mapTilesParent;
+    [SerializeField] private BiomePreset[] _biomes;
+    [SerializeField] private GameObject _tilePrefab;
 
-    [Header("Dimensions")]
-    public int width = 50;
-    public int height = 50;
-    public float scale = 1.0f;
-    public Vector2 offset;
+    [Header("Dimensions")] [SerializeField]
+    private int _width = 50;
 
-    [Header("Height Map")]
-    public Wave[] heightWaves;
-    public Gradient heightDebugColors;
-    public float[,] heightMap;
+    [SerializeField] private int _height = 50;
+    [SerializeField] private float _scale = 1.0f;
+    [SerializeField] private Vector2 _offset;
 
-    [Header("Moisture Map")]
-    public Wave[] moistureWaves;
-    public Gradient moistureDebugColors;
-    private float[,] moistureMap;
+    [Header("Height Map")] [SerializeField]
+    private Wave[] _heightWaves;
 
-    [Header("Heat Map")]
-    public Wave[] heatWaves;
-    public Gradient heatDebugColors;
-    private float[,] heatMap;
+    private float[,] _heightMap;
 
-    private float last;
+    [Header("Moisture Map")] [SerializeField]
+    private Wave[] _moistureWaves;
 
-    void Start ()
+    private float[,] _moistureMap;
+
+    [Header("Heat Map")] [SerializeField] private Wave[] _heatWaves;
+
+    private float[,] _heatMap;
+
+    private readonly List<GameObject> _mapTiles = new();
+
+    private void Start()
     {
         GenerateMap();
     }
 
-    void GenerateMap ()
+    [ContextMenu("DeleteMap")]
+    private void DeleteMap()
     {
-        // height map
-        heightMap = PerlinNoiseGenerator.Generate(width, height, scale, heightWaves, offset);
-
-        // moisture map
-        moistureMap = PerlinNoiseGenerator.Generate(width, height, scale, moistureWaves, offset);
-
-        // heat map
-        heatMap = PerlinNoiseGenerator.Generate(width, height, scale, heatWaves, offset);
-
-        
-        Color[] pixels = new Color[width * height];
-
-        for(int x = 0; x < width; ++x)
+        foreach (var tile in _mapTiles)
         {
-            for(int y = 0; y < height; ++y)
+            Destroy(tile);
+        }
+
+        _mapTiles.Clear();
+    }
+
+    [ContextMenu("GenerateMap")]
+    private void GenerateMap()
+    {
+        _heightMap = PerlinNoiseGenerator.Generate(_width, _height, _scale, _heightWaves, _offset);
+        _moistureMap = PerlinNoiseGenerator.Generate(_width, _height, _scale, _moistureWaves, _offset);
+        _heatMap = PerlinNoiseGenerator.Generate(_width, _height, _scale, _heatWaves, _offset);
+
+        for (var x = 0; x < _width; ++x)
+        {
+            for (var y = 0; y < _height; ++y)
             {
-                GameObject tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
-                tile.GetComponent<SpriteRenderer>().sprite = GetBiome(heightMap[x, y], moistureMap[x, y], heatMap[x, y]).GetSprite();
+                var tile = Instantiate(_tilePrefab, new Vector3(x, y, 0), Quaternion.identity, _mapTilesParent);
+                _mapTiles.Add(tile);
+                tile.GetComponent<SpriteRenderer>().sprite =
+                    GetBiome(_heightMap[x, y], _moistureMap[x, y], _heatMap[x, y]).GetSprite();
             }
         }
+
+        _mapTilesParent.position = new Vector3(-_width / 2f, -_height / 2f);
+        _mainCamera.orthographicSize = _width / 2f;
     }
 
-    public class BiomeTempData
+    private class BiomeTempData
     {
-        public BiomePreset biome;
+        public readonly BiomePreset Biome;
 
-        public BiomeTempData (BiomePreset preset)
+        public BiomeTempData(BiomePreset preset)
         {
-            biome = preset;
+            Biome = preset;
         }
-        
-        public float GetDiffValue (float height, float moisture, float heat)
+
+        public float GetDiffValue(float height, float moisture, float heat)
         {
-            return (height - biome.minHeight) + (moisture - biome.minMoisture) + (heat - biome.minHeat);
+            return (height - Biome.MinimalHeight) + (moisture - Biome.MinimalMoisture) + (heat - Biome.MinimalHeat);
         }
     }
 
-    BiomePreset GetBiome (float height, float moisture, float heat)
+    BiomePreset GetBiome(float height, float moisture, float heat)
     {
         BiomePreset biomeToReturn = null;
-        List<BiomeTempData> biomeTemp = new List<BiomeTempData>();
+        var biomeTemp = new List<BiomeTempData>();
 
-        foreach(BiomePreset biome in biomes)
+        foreach (var biome in _biomes)
         {
-            if(biome.CheckIfBiomeConditionsMet(height, moisture, heat))
+            if (biome.CheckIfBiomeConditionsMet(height, moisture, heat))
             {
                 biomeTemp.Add(new BiomeTempData(biome));
             }
         }
 
-        float curVal = 0.0f;
+        var curVal = 0.0f;
 
-        foreach(BiomeTempData biome in biomeTemp)
+        foreach (var biome in biomeTemp)
         {
-            if(biomeToReturn == null)
+            if (biomeToReturn == null)
             {
-                biomeToReturn = biome.biome;
+                biomeToReturn = biome.Biome;
                 curVal = biome.GetDiffValue(height, moisture, heat);
             }
             else
             {
-                if(biome.GetDiffValue(height, moisture, heat) < curVal)
-                {
-                    biomeToReturn = biome.biome;
-                    curVal = biome.GetDiffValue(height, moisture, heat);
-                }
+                if (!(biome.GetDiffValue(height, moisture, heat) < curVal)) continue;
+                biomeToReturn = biome.Biome;
+                curVal = biome.GetDiffValue(height, moisture, heat);
             }
         }
 
-        if(biomeToReturn == null)
-            biomeToReturn = biomes[0];
+        if (biomeToReturn == null)
+            biomeToReturn = _biomes[0];
 
         return biomeToReturn;
     }

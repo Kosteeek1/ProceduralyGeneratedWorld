@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 21300000, guid: 089ec694c2f50a748a5f490fa5616b5a, type: 3}
-  minHeight: 0.2
-  minMoisture: 0.4
-  minHeat: 0.4
+  - {fileID: 835541140, guid: 2092e3aaef3f05547987497719d63576, type: 3}
+  - {fileID: -1857320510, guid: 2092e3aaef3f05547987497719d63576, type: 3}
+  minimalHeight: 0.2
+  minimalMoisture: 0.4
+  minimalHeat: 0.4

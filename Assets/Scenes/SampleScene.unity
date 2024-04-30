@@ -184,7 +184,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 142.82188
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -210,6 +210,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &969964746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969964747}
+  m_Layer: 0
+  m_Name: GeneratedTiles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &969964747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969964746}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,126 +275,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a75d03cff0f834a9c5bc6bb6c4af19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  biomes:
+  _mainCamera: {fileID: 519420031}
+  _mapTilesParent: {fileID: 969964747}
+  _biomes:
   - {fileID: 11400000, guid: 43348fb5ae74815499f23aecc0d79be1, type: 2}
   - {fileID: 11400000, guid: ec483cd4968ecdf47afc477aac1fcb17, type: 2}
   - {fileID: 11400000, guid: ee93476f140d2ef4f9c6e4d829382b36, type: 2}
   - {fileID: 11400000, guid: 44cbf6a2ebbfaa8428cd09b092991e01, type: 2}
   - {fileID: 11400000, guid: 1b3d64275644c794fbab892501d2a108, type: 2}
   - {fileID: 11400000, guid: 110afa2bfacac0643964503df513a6ad, type: 2}
-  tilePrefab: {fileID: 3058052775888624957, guid: e9919f512d234e2438c7f57784d606fa, type: 3}
-  width: 200
-  height: 200
-  scale: 1
-  offset: {x: 0, y: 0}
-  heightWaves:
+  _tilePrefab: {fileID: 796684918125242634, guid: e3dcc95177b7c5f4eb97e63306cad084, type: 3}
+  _width: 200
+  _height: 200
+  _scale: 1
+  _offset: {x: 0, y: 0}
+  _heightWaves:
   - seed: 56
     frequency: 0.05
     amplitude: 1
   - seed: 199.36
     frequency: 0.1
     amplitude: 0.5
-  heightDebugColors:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  moistureWaves:
-  - seed: 356
+  _moistureWaves:
+  - seed: 621
     frequency: 0.03
     amplitude: 1
-  moistureDebugColors:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  heatWaves:
+  _heatWaves:
   - seed: 318.6
     frequency: 0.04
     amplitude: 1
   - seed: 329.7
     frequency: 0.02
     amplitude: 0.5
-  heatDebugColors:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
 --- !u!4 &1311440935
 Transform:
   m_ObjectHideFlags: 0
@@ -385,3 +328,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1311440935}
+  - {fileID: 969964747}
