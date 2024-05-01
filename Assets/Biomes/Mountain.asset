@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba15d650241bce48a57628b1fb92182, type: 3}
   m_Name: Mountain
   m_EditorClassIdentifier: 
-  tiles:
+  Tiles:
   - {fileID: -1810313500, guid: 2092e3aaef3f05547987497719d63576, type: 3}
   - {fileID: -921988527, guid: 2092e3aaef3f05547987497719d63576, type: 3}
   - {fileID: -1399105482, guid: 2092e3aaef3f05547987497719d63576, type: 3}
   - {fileID: -442206973, guid: 2092e3aaef3f05547987497719d63576, type: 3}
-  minimalHeight: 0.5
-  minimalMoisture: 0
-  minimalHeat: 0
+  MinimalHeight: 0.5
+  MinimalMoisture: 0
+  MinimalHeat: 0

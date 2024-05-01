@@ -290,23 +290,23 @@ MonoBehaviour:
   _scale: 1
   _offset: {x: 0, y: 0}
   _heightWaves:
-  - seed: 56
-    frequency: 0.05
-    amplitude: 1
-  - seed: 199.36
-    frequency: 0.1
-    amplitude: 0.5
+  - Seed: 56
+    Frequency: 0.05
+    Amplitude: 1
+  - Seed: 199.36
+    Frequency: 0.1
+    Amplitude: 0.5
   _moistureWaves:
-  - seed: 621
-    frequency: 0.03
-    amplitude: 1
+  - Seed: 621
+    Frequency: 0.03
+    Amplitude: 1
   _heatWaves:
-  - seed: 318.6
-    frequency: 0.04
-    amplitude: 1
-  - seed: 329.7
-    frequency: 0.02
-    amplitude: 0.5
+  - Seed: 318.6
+    Frequency: 0.04
+    Amplitude: 1
+  - Seed: 329.7
+    Frequency: 0.02
+    Amplitude: 0.5
 --- !u!4 &1311440935
 Transform:
   m_ObjectHideFlags: 0
