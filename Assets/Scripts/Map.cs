@@ -97,25 +97,20 @@ public class Map : MonoBehaviour
             }
         }
 
-        var curVal = 0.0f;
+        if (biomeTemp.Count == 0)
+        {
+            return _biomes[0];
+        }
+
+        biomeToReturn = biomeTemp[0].Biome;
+        var curVal = biomeTemp[0].GetDiffValue(height, moisture, heat);
 
         foreach (var biome in biomeTemp)
         {
-            if (biomeToReturn == null)
-            {
-                biomeToReturn = biome.Biome;
-                curVal = biome.GetDiffValue(height, moisture, heat);
-            }
-            else
-            {
-                if (!(biome.GetDiffValue(height, moisture, heat) < curVal)) continue;
-                biomeToReturn = biome.Biome;
-                curVal = biome.GetDiffValue(height, moisture, heat);
-            }
+            if (!(biome.GetDiffValue(height, moisture, heat) < curVal)) continue;
+            biomeToReturn = biome.Biome;
+            curVal = biome.GetDiffValue(height, moisture, heat);
         }
-
-        if (biomeToReturn == null)
-            biomeToReturn = _biomes[0];
 
         return biomeToReturn;
     }
